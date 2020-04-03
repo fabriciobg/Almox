@@ -1,19 +1,45 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+import { SafeAreaView } from 'react-native'
+
+import * as Font from 'expo-font'
+import { AppLoading } from 'expo'
+import { Ionicons } from '@expo/vector-icons'
+import { NavigationContainer } from '@react-navigation/native'
+import { Provider } from 'react-native-paper'
+
+import BottomTabNavigator from './src/navigation/BottomTabNavigator'
+import { Colors } from './src/styles'
+
+export default class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { loading: true };
+  }
+
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      ...Ionicons.font
+    })
+    this.setState({ loading: false })
+  }
+
+  render() {
+    if (this.state.loading) {
+      return <AppLoading />
+    }
+    return (
+      <SafeAreaView style={{ flex: 1, ...Colors.headerBackgroundColor }}>
+        <Provider>
+          <NavigationContainer>
+            <BottomTabNavigator />
+          </NavigationContainer >
+        </Provider>
+      </SafeAreaView>
+    );
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
