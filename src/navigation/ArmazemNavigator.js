@@ -3,7 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import ArmazemHome from '../screens/ArmazemHome'
 import ArmazemRegister from '../screens/ArmazemRegister'
-// import ArmazemList from '../screens/ArmazemList'
+import ArmazemList from '../screens/ArmazemList'
+import ArmazemEdit from '../screens/ArmazemEdit'
 
 const Stack = createStackNavigator();
 
@@ -21,10 +22,14 @@ export default () => {
         name="ArmazemRegister"
         component={ArmazemRegister}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="ArmazemList"
         component={ArmazemList}
-      /> */}
+      />
+      <Stack.Screen
+        name="ArmazemEdit"
+        component={ArmazemEdit}
+      />
     </Stack.Navigator>
   );
 }

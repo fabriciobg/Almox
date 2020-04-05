@@ -46,21 +46,36 @@ export default ({ navigation }) => {
     const registerItem = async () => {
         Keyboard.dismiss()
         setIsLoading(true)
-        if(!nome.length) {
+        if (!nome.length) {
             setErrorContent('É necessário preencher todos os campos do formulário de cadastro antes de continuar.')
             openDialogError()
             return
         }
-        axios
-            .post('/armazem/register', { 
-                nome 
-            })
-            .then(() => {
-                setSuccessContent(`Armazém ${nome.toUpperCase()} cadastrado com sucesso!`)
-                openDialogSuccess()
+        // Verificando se já existe o armazém na base de dados
+        axios.get(`armazem/list/${nome}`)
+            .then(resp => {
+                if (resp.data.length) {
+                    setErrorContent(`Já existe um armazém chamado ${nome.toUpperCase()} no banco de dados.`)
+                    openDialogError()
+                    return
+                } else {
+                    // Cadastrando novo armazém
+                    axios
+                        .post('/armazem/register', {
+                            nome
+                        })
+                        .then(() => {
+                            setSuccessContent(`Armazém ${nome.toUpperCase()} cadastrado com sucesso!`)
+                            openDialogSuccess()
+                        })
+                        .catch(() => {
+                            setErrorContent('Ocorreu um erro ao tentar se comunicar com o servidor! Não foi possível cadastrar o armazém, tente novamente mais tarde!')
+                            openDialogError()
+                        })
+                }
             })
             .catch(() => {
-                setErrorContent('Ocorreu um erro ao tentar se comunicar com o servidor! Não foi possível cadastrar o armazém, tente novamente mais tarde!')
+                setErrorContent('Ocorreu um erro ao tentar se comunicar com o servidor! Não foi possível cadastrar o item, tente novamente mais tarde!')
                 openDialogError()
             })
     }
@@ -76,22 +91,22 @@ export default ({ navigation }) => {
                     <CardItem style={styles.cardItem}>
                         <Item floatingLabel>
                             <Label style={styles.inputLabel}>Nome do armazém</Label>
-                            <Input style={styles.textInput} value={nome} onChangeText={text => setNome(text)} />
+                            <Input style={styles.textInput} value={nome} onChangeText={text => setNome(text.toUpperCase())} />
                         </Item>
                     </CardItem>
                     <CardItem style={styles.cardButtons}>
-                        <Button 
-                            mode='outlined' 
-                            color={Colors.buttonCancelColor} 
+                        <Button
+                            mode='outlined'
+                            color={Colors.buttonCancelColor}
                             onPress={goHome}
                             disabled={isLoading}
                         >
                             CANCELAR
                         </Button>
                         <Button
-                            mode='outlined' 
-                            color={Colors.buttonConfirmColor} 
-                            onPress={registerItem} 
+                            mode='outlined'
+                            color={Colors.buttonConfirmColor}
+                            onPress={registerItem}
                             loading={isLoading}
                             disabled={isLoading}
                         >
@@ -99,16 +114,16 @@ export default ({ navigation }) => {
                         </Button>
                     </CardItem>
                 </Card>
-                <Dialog 
-                    dialogVisible={dialogSuccess} 
+                <Dialog
+                    dialogVisible={dialogSuccess}
                     title='Operação finalizada'
                     content={successContent}
                     closeDialog={closeDialogSuccess}
                     buttonTitle='CONFIRMAR'
                     buttonColor={Colors.buttonConfirmColor}
                 />
-                <Dialog 
-                    dialogVisible={dialogError} 
+                <Dialog
+                    dialogVisible={dialogError}
                     title='Ops!'
                     content={errorContent}
                     closeDialog={closeDialogError}

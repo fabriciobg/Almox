@@ -3,7 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import ItemHome from '../screens/ItemHome'
 import ItemRegister from '../screens/ItemRegister'
-// import ItemList from '../screens/ItemList'
+import ItemList from '../screens/ItemList'
+import ItemEdit from '../screens/ItemEdit'
 
 const Stack = createStackNavigator();
 
@@ -21,10 +22,14 @@ export default () => {
         name="ItemRegister"
         component={ItemRegister}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="ItemList"
         component={ItemList}
-      /> */}
+      />
+      <Stack.Screen
+        name="ItemEdit"
+        component={ItemEdit}
+      />
     </Stack.Navigator>
   );
 }

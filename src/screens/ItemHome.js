@@ -50,7 +50,7 @@ export default ({ navigation }) => {
 
     return (
         <Container>
-            <Header title='Itens' />
+            <Header title='Item' />
             <Content padder contentContainerStyle={styles.content}>
                 <TouchableOpacity onPress={() => navigation.navigate('ItemRegister')}>
                     <Card style={styles.card}>
@@ -58,23 +58,23 @@ export default ({ navigation }) => {
                             <MaterialCommunityIcons name="toolbox" {...Colors.titleTextColor} size={128} />
                             <Title style={styles.text}>
                                 CADASTRAR
-                                </Title>
+                            </Title>
                             <Subtitle>
-                                ITENS
-                                </Subtitle>
+                                ITEM
+                            </Subtitle>
                         </CardItem>
                     </Card>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('ItemList')}>
                     <Card style={styles.card}>
                         <CardItem style={styles.cardItem}>
                             <MaterialCommunityIcons name="format-list-bulleted" {...Colors.titleTextColor} size={128} />
                             <Title style={styles.text}>
-                                CONSULTAR
-                                </Title>
+                                LISTAR
+                            </Title>
                             <Subtitle>
                                 ITENS
-                                </Subtitle>
+                            </Subtitle>
                         </CardItem>
                     </Card>
                 </TouchableOpacity>

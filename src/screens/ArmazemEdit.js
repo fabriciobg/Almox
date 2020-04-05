@@ -9,8 +9,9 @@ import Header from '../components/Header'
 import Dialog from '../components/Dialog'
 import { Colors } from '../styles'
 
-export default ({ navigation }) => {
+export default ({ route, navigation }) => {
 
+    const [armazem, setArmazem] = React.useState({})
     const [nome, setNome] = React.useState('')
     const [isLoading, setIsLoading] = React.useState(false)
     const [dialogSuccess, setDialogSuccess] = React.useState(false)
@@ -18,8 +19,13 @@ export default ({ navigation }) => {
     const [dialogError, setDialogError] = React.useState(false)
     const [errorContent, setErrorContent] = React.useState('')
 
-    const goHome = () => {
-        navigation.navigate('ItemHome')
+    React.useEffect(() => {
+        setNome(route.params.armazem.nome)
+        setArmazem(route.params.armazem)
+    }, [])
+
+    const goBack = () => {
+        navigation.navigate('ArmazemList', { reload: true })
     }
 
     const openDialogSuccess = () => {
@@ -47,34 +53,35 @@ export default ({ navigation }) => {
         Keyboard.dismiss()
         setIsLoading(true)
         if (!nome.length) {
-            setErrorContent('É necessário preencher todos os campos do formulário de cadastro antes de continuar.')
+            setErrorContent('É necessário preencher todos os campos do formulário antes de continuar.')
             openDialogError()
             return
         }
-        // Verificando se já existe o item na base de dados
-        axios.get(`item/list/${nome}`)
+        // Verificando se já existe o armazem na base de dados
+        axios.get(`armazem/list/${nome}`)
             .then(resp => {
-                if (resp.data.length) {
+                if (resp.data.length && resp.data[0].id !== armazem.id) {
                     setErrorContent(`Já existe um item chamado ${nome.toUpperCase()} no banco de dados.`)
                     openDialogError()
                     return
                 } else {
-                    // Cadastrando novo item
-                    axios.post('/item/register', {
+                    // Editando armazem
+                    axios.put('/armazem/update', {
+                            id: armazem.id,
                             nome
                         })
                         .then(() => {
-                            setSuccessContent(`Item ${nome.toUpperCase()} cadastrado com sucesso!`)
+                            setSuccessContent(`Armazém ${nome.toUpperCase()} editado com sucesso!`)
                             openDialogSuccess()
                         })
                         .catch(err => {
-                            setErrorContent('Ocorreu um erro ao tentar se comunicar com o servidor! Não foi possível cadastrar o item, tente novamente mais tarde!')
+                            setErrorContent('Ocorreu um erro ao tentar se comunicar com o servidor! Não foi possível editar o armazém, tente novamente mais tarde!')
                             openDialogError()
                         })
                 }
             })
             .catch(() => {
-                setErrorContent('Ocorreu um erro ao tentar se comunicar com o servidor! Não foi possível cadastrar o item, tente novamente mais tarde!')
+                setErrorContent('Ocorreu um erro ao tentar se comunicar com o servidor! Não foi possível editar o armazém, tente novamente mais tarde!')
                 openDialogError()
             })
 
@@ -82,15 +89,15 @@ export default ({ navigation }) => {
 
     return (
         <Container>
-            <Header title='Itens' subtitle='Cadastro' leftAction={goHome} />
+            <Header title='Armazém' subtitle='Edição' leftAction={goBack} />
             <Content padder>
                 <Card>
                     <CardItem header bordered >
-                        <Text style={styles.cardHeaderText}>Cadastro de itens</Text>
+                        <Text style={styles.cardHeaderText}>Edição de armazém</Text>
                     </CardItem>
                     <CardItem style={styles.cardItem}>
                         <Item floatingLabel>
-                            <Label style={styles.inputLabel}>Nome do item</Label>
+                            <Label style={styles.inputLabel}>Nome do armazém</Label>
                             <Input style={styles.textInput} value={nome} onChangeText={text => setNome(text.toUpperCase())} />
                         </Item>
                     </CardItem>
@@ -98,10 +105,10 @@ export default ({ navigation }) => {
                         <Button
                             mode='outlined'
                             color={Colors.buttonCancelColor}
-                            onPress={goHome}
+                            onPress={goBack}
                             disabled={isLoading}
                         >
-                            CANCELAR
+                            VOLTAR
                         </Button>
                         <Button
                             mode='outlined'
@@ -110,7 +117,7 @@ export default ({ navigation }) => {
                             loading={isLoading}
                             disabled={isLoading}
                         >
-                            CADASTRAR
+                            EDITAR
                         </Button>
                     </CardItem>
                 </Card>
@@ -118,7 +125,10 @@ export default ({ navigation }) => {
                     dialogVisible={dialogSuccess}
                     title='Operação finalizada'
                     content={successContent}
-                    closeDialog={closeDialogSuccess}
+                    closeDialog={() => {
+                        closeDialogSuccess()
+                        goBack()
+                    }}
                     buttonTitle='CONFIRMAR'
                     buttonColor={Colors.buttonConfirmColor}
                 />

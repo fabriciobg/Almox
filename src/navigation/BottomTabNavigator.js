@@ -32,7 +32,7 @@ export default () => {
         name="Armazem Navigator"
         component={ArmazemNavigator}
         options={{
-          tabBarLabel: 'Armazém',
+          tabBarLabel: 'Armazéns',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="treasure-chest" color={color} size={size} />
           ),

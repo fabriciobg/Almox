@@ -20,23 +20,23 @@ export default ({ navigation }) => {
                             <MaterialCommunityIcons name="treasure-chest" {...Colors.titleTextColor} size={128} />
                             <Title style={styles.title}>
                                 CADASTRAR
-                                </Title>
+                            </Title>
                             <Subtitle>
                                 ARMAZÉM
-                                </Subtitle>
+                            </Subtitle>
                         </CardItem>
                     </Card>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('ArmazemList')}>
                     <Card style={styles.card}>
                         <CardItem style={styles.cardItem}>
                             <MaterialCommunityIcons name="format-list-bulleted" {...Colors.titleTextColor} size={128} />
                             <Title style={styles.title}>
-                                CONSULTAR
-                                </Title>
+                                LISTAR
+                            </Title>
                             <Subtitle>
-                                ARMAZÉM
-                                </Subtitle>
+                                ARMAZÉNS
+                            </Subtitle>
                         </CardItem>
                     </Card>
                 </TouchableOpacity>
