@@ -80,7 +80,9 @@ const styles = StyleSheet.create({
     },
     text: {
         color: Colors.textInputColor,
-        fontFamily: 'Roboto_medium'
+        fontFamily: 'Roboto_medium',
+        textAlign: 'justify',
+        marginRight: 16
     },
     buttonEdit: {
         marginRight: 4

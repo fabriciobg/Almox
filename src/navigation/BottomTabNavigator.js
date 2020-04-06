@@ -51,5 +51,3 @@ export default () => {
     </Tab.Navigator>
   );
 }
-
-// https://reactnavigation.org/docs/bottom-tab-navigator

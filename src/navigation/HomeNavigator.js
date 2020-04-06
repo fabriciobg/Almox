@@ -9,7 +9,6 @@ export default () => {
   return (
     <Stack.Navigator
       initialRouteName="Home"
-      headerMode="screen"
       headerMode="none"
     >
       <Stack.Screen
