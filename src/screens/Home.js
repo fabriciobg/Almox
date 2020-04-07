@@ -1,39 +1,43 @@
 import React from 'react'
 import { Container, Content, Text} from 'native-base';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { allArmazens } from '../store/fetchActions'
+
 import Header from '../components/Header'
 import Card from '../components/ArmazemOutdoor'
 
-import axios from '../service/api'
-
 export default () => {
 
-    const [armazens, setArmazens] = React.useState([])
+    const armazens = useSelector(state => state.armazens)
+    const dispatch = useDispatch()
+
+    
     const [searchText, setSearchText] = React.useState('')
     const [armazensSearch, setArmazensSearch] = React.useState([])
 
     React.useEffect(() => {
-        carregarArmazens()
+        dispatch(allArmazens())
     }, [])
 
-    const carregarArmazens = async () => {
-        await axios.get('/armazem/list')
-            .then(resp => {
-                setArmazens(resp.data)
-                setArmazensSearch(resp.data)
-            })
-    }
+    // const carregarArmazens = async () => {
+    //     await axios.get('/armazem/list')
+    //         .then(resp => {
+    //             setArmazens(resp.data)
+    //             setArmazensSearch(resp.data)
+    //         })
+    // }
 
-    const onChangeSearchText = text => {
-        setSearchText(text.toUpperCase())
-        setArmazensSearch(armazens.filter(armazem => armazem.nome.includes(text.toUpperCase())))
-    }
+    // const onChangeSearchText = text => {
+    //     setSearchText(text.toUpperCase())
+    //     setArmazensSearch(armazens.filter(armazem => armazem.nome.includes(text.toUpperCase())))
+    // }
 
     return (
         <Container>
             <Header title='Meus armazéns'/>
             <Content padder>
-                {armazensSearch.map(armazem => (
+                {armazens.map(armazem => (
                     <Card 
                         key={armazem.id} 
                         armazem={armazem} 

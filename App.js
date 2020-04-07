@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { Provider as ReduxProvider } from 'react-redux'
+
 import { SafeAreaView } from 'react-native'
 
 import * as Font from 'expo-font'
@@ -10,6 +12,8 @@ import { Provider } from 'react-native-paper'
 
 import BottomTabNavigator from './src/navigation/BottomTabNavigator'
 import { Colors } from './src/styles'
+
+import store from './src/store'
 
 export default class App extends Component {
 
@@ -35,9 +39,11 @@ export default class App extends Component {
     return (
       <SafeAreaView style={{ flex: 1, ...Colors.headerBackgroundColor }}>
         <Provider>
-          <NavigationContainer>
-            <BottomTabNavigator />
-          </NavigationContainer >
+          <ReduxProvider store={store}>
+            <NavigationContainer>
+              <BottomTabNavigator />
+            </NavigationContainer >
+          </ReduxProvider>
         </Provider>
       </SafeAreaView>
     );
