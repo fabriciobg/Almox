@@ -1,14 +1,15 @@
 import axios from '../../service/api'
 
 import { loadItems, removeItem } from '../ducks/itens'
-import { loadArmazens } from '../ducks/armazens'
+import { loadArmazens, loadingArmazens } from '../ducks/armazens'
 
 export const allArmazens = () => {
     return dispatch => {
+        dispatch(loadingArmazens(true))
         axios.get('/armazem/list')
             .then(resp => {
-                console.log('load')
                 dispatch(loadArmazens(resp.data))
+                dispatch(loadingArmazens(false))
             })
             .catch(err => {
                 console.log(err)
