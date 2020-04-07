@@ -31,3 +31,5 @@ export const deleteIconColor = '#404040'
 export const editIconColor = '#006666'
 
 export const spinnerColor = '#003399'
+
+export const highlight = '#cc0000'
