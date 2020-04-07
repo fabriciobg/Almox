@@ -1,6 +1,9 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 
+import { useDispatch } from 'react-redux'
+import { allArmazens } from '../store/fetchActions'
+
 import { Container, Content, Spinner, Title } from 'native-base'
 import { Searchbar } from 'react-native-paper'
 
@@ -10,6 +13,8 @@ import axios from '../service/api'
 import { Colors } from '../styles'
 
 export default ({ route, navigation }) => {
+
+    const dispatch = useDispatch()
 
     const [armazens, setArmazens] = React.useState([])
     const [searchText, setSearchText] = React.useState('')
@@ -40,6 +45,7 @@ export default ({ route, navigation }) => {
             })
                 .then(resp => {
                     carregarArmazens()
+                    dispatch(allArmazens())
                     return resolve(resp)
                 })
                 .catch(err => {

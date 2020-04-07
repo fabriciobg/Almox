@@ -3,6 +3,9 @@ import { Container, Content, Card, CardItem, Input, Item, Text, Label } from 'na
 import { StyleSheet, Keyboard } from 'react-native'
 import { Button } from 'react-native-paper'
 
+import { useDispatch } from 'react-redux'
+import { allArmazens } from '../store/fetchActions'
+
 import axios from '../service/api'
 
 import Header from '../components/Header'
@@ -10,6 +13,8 @@ import Dialog from '../components/Dialog'
 import { Colors } from '../styles'
 
 export default ({ navigation }) => {
+
+    const dispatch = useDispatch()
 
     const [nome, setNome] = React.useState('')
     const [isLoading, setIsLoading] = React.useState(false)
@@ -65,6 +70,7 @@ export default ({ navigation }) => {
                             nome
                         })
                         .then(() => {
+                            dispatch(allArmazens())
                             setSuccessContent(`Armazém ${nome.toUpperCase()} cadastrado com sucesso!`)
                             openDialogSuccess()
                         })

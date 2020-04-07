@@ -4,12 +4,16 @@ import { StyleSheet, Keyboard } from 'react-native'
 import { Button } from 'react-native-paper'
 
 import axios from '../service/api'
+import { useDispatch } from 'react-redux'
+import { allArmazens } from '../store/fetchActions'
 
 import Header from '../components/Header'
 import Dialog from '../components/Dialog'
 import { Colors } from '../styles'
 
 export default ({ route, navigation }) => {
+
+    const dispatch = useDispatch()
 
     const [armazem, setArmazem] = React.useState({})
     const [nome, setNome] = React.useState('')
@@ -72,6 +76,7 @@ export default ({ route, navigation }) => {
                         })
                         .then(() => {
                             setSuccessContent(`Armazém ${nome.toUpperCase()} editado com sucesso!`)
+                            dispatch(allArmazens())
                             openDialogSuccess()
                         })
                         .catch(err => {
