@@ -6,9 +6,9 @@ import { Card, CardItem, Title } from 'native-base'
 import { Colors } from '../styles'
 
 
-export default ({ armazem }) => {
+export default ({ armazem, open }) => {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => open(armazem)}>
             <Card style={styles.card}>
                 <CardItem style={styles.cardItem}>
                     <Title style={styles.title}>{armazem.nome}</Title>

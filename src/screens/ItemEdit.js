@@ -89,7 +89,7 @@ export default ({ route, navigation }) => {
 
     return (
         <Container>
-            <Header title='Item' subtitle='Edição' leftAction={goBack} />
+            <Header title='Item' subtitle='Edição' />
             <Content padder>
                 <Card>
                     <CardItem header bordered >

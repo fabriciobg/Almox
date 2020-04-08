@@ -82,7 +82,7 @@ export default ({ navigation }) => {
 
     return (
         <Container>
-            <Header title='Itens' subtitle='Cadastro' leftAction={goHome} />
+            <Header title='Itens' subtitle='Cadastro' />
             <Content padder>
                 <Card>
                     <CardItem header bordered >

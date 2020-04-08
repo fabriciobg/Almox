@@ -14,40 +14,6 @@ import Header from '../components/Header'
 
 
 export default ({ navigation }) => {
-
-    // const [items, setItems] = React.useState([])
-
-    // React.useEffect(() => {
-    //     const buscarArmazens = async () => {
-    //         await Api
-    //             .get('/item/list')
-    //             .then(resp => {
-    //                 setItems(resp.data)
-    //             })
-    //             .catch(err => {
-    //                 console.log(err)
-    //             })
-    //     }
-    //     buscarArmazens()
-    //     console.log('chamando')
-    // },[])
-
-    // const [dialogVisible, setDialogVisible] = React.useState(false)
-
-    // const openDialog = () => {
-    //     setDialogVisible(true)
-    // }
-
-    // const closeDialog = () => {
-    //     setDialogVisible(false)
-    // }
-
-    // const DismissKeyboard = ({ children }) => (
-    //     <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
-    //         { children }
-    //     </TouchableWithoutFeedback>
-    // )
-
     return (
         <Container>
             <Header title='Item' />

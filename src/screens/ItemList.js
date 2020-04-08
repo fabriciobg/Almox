@@ -49,10 +49,6 @@ export default ({ route, navigation }) => {
         
     }
 
-    const goHome = () => {
-        navigation.navigate('ItemHome')
-    }
-
     const onChangeSearchText = text => {
         setSearchText(text.toUpperCase())
         setItensSearch(itens.filter(item => item.nome.includes(text.toUpperCase())))
@@ -64,7 +60,7 @@ export default ({ route, navigation }) => {
 
     return (
         <Container>
-            <Header title='Item' subtitle='Lista' leftAction={goHome} />
+            <Header title='Item' subtitle='Lista' />
             <Searchbar
                 placeholder="Buscar"
                 clearAccessibilityLabel='clear'

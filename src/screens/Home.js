@@ -6,37 +6,34 @@ import { Searchbar } from 'react-native-paper'
 import { useSelector, useDispatch } from 'react-redux'
 import { allArmazens } from '../store/fetchActions'
 import { filterArmazens } from '../store/ducks/armazens'
+import { loadingItensArmazem, resetItensArmazem } from '../store/ducks/itensArmazem'
 
 import { Colors } from '../styles'
 
 import Header from '../components/Header'
 import Card from '../components/ArmazemOutdoor'
 
-export default () => {
+export default ({ navigation }) => {
 
     const armazens = useSelector(state => state.armazens.filter)
     const isLoading = useSelector(state => state.armazens.loading)
     const dispatch = useDispatch()
 
-
     const [searchText, setSearchText] = React.useState('')
-    const [armazensSearch, setArmazensSearch] = React.useState([])
 
     React.useEffect(() => {
         dispatch(allArmazens())
     }, [])
 
-    // const carregarArmazens = async () => {
-    //     await axios.get('/armazem/list')
-    //         .then(resp => {
-    //             setArmazens(resp.data)
-    //             setArmazensSearch(resp.data)
-    //         })
-    // }
-
     const onChangeSearchText = text => {
         setSearchText(text.toUpperCase())
         dispatch(filterArmazens(text.toUpperCase()))
+    }
+
+    const openStash = armazem => {
+        dispatch(resetItensArmazem())
+        dispatch(loadingItensArmazem(true))
+        navigation.navigate('MeuArmazem', { armazem })
     }
 
     return (
@@ -55,6 +52,7 @@ export default () => {
                     <Card
                         key={armazem.id}
                         armazem={armazem}
+                        open={openStash}
                     />
                 ))}
                 {!isLoading && armazens.length === 0 && searchText.length === 0 &&

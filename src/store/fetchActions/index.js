@@ -2,20 +2,7 @@ import axios from '../../service/api'
 
 import { loadItems, removeItem } from '../ducks/itens'
 import { loadArmazens, loadingArmazens } from '../ducks/armazens'
-
-export const allArmazens = () => {
-    return dispatch => {
-        dispatch(loadingArmazens(true))
-        axios.get('/armazem/list')
-            .then(resp => {
-                dispatch(loadArmazens(resp.data))
-                dispatch(loadingArmazens(false))
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-}
+import { loadItensArmazem, loadingItensArmazem } from '../ducks/itensArmazem'
 
 export const allItems = () => {
     return dispatch => {
@@ -40,5 +27,33 @@ export const fetchRemoveItem = id => {
         .catch(err => {
             console.log(err)
         })
+    }
+}
+
+export const allArmazens = () => {
+    return dispatch => {
+        dispatch(loadingArmazens(true))
+        axios.get('/armazem/list')
+            .then(resp => {
+                dispatch(loadArmazens(resp.data))
+                dispatch(loadingArmazens(false))
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+}
+
+export const allItensArmazem = id_armazem => {
+    return dispatch => {
+        dispatch(loadingItensArmazem(true))
+        axios.post('/item/armazem/list', { id_armazem })
+            .then(resp => {
+                dispatch(loadItensArmazem(resp.data))
+                dispatch(loadingItensArmazem(false))
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 }

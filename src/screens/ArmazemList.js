@@ -55,10 +55,6 @@ export default ({ route, navigation }) => {
         
     }
 
-    const goHome = () => {
-        navigation.navigate('ArmazemHome')
-    }
-
     const onChangeSearchText = text => {
         setSearchText(text.toUpperCase())
         setArmazensSearch(armazens.filter(armazem => armazem.nome.includes(text.toUpperCase())))
@@ -70,7 +66,7 @@ export default ({ route, navigation }) => {
 
     return(
         <Container>
-            <Header title='Armazém' subtitle='Lista' leftAction={goHome} />
+            <Header title='Armazém' subtitle='Lista'/>
             <Searchbar
                 placeholder="Buscar"
                 clearAccessibilityLabel='clear'
