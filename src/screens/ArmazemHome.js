@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Content, Card, CardItem, Text, View, Title, Subtitle } from 'native-base';
+import { Container, Content, Card, CardItem, Title, Subtitle } from 'native-base';
 import { TouchableOpacity, StyleSheet } from 'react-native'
 
 import { MaterialCommunityIcons } from 'react-native-vector-icons';

@@ -1,83 +1,85 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { Container, Content, Card, CardItem, Title, Subtitle } from 'native-base';
+import { TouchableOpacity, StyleSheet } from 'react-native'
 
-import { Container, Content, Text, Spinner } from 'native-base'
-import { Searchbar } from 'react-native-paper'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadCheckItensArmazem } from '../store/ducks/itensArmazem'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { allItensArmazem } from '../store/fetchActions'
-import { filterItensArmazem } from '../store/ducks/itensArmazem'
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
+
+import { Colors } from '../styles'
 
 import Header from '../components/Header'
-import Card from '../components/ItemArmazemCard'
-import { Colors } from '../styles'
 
 export default ({ route, navigation }) => {
 
-    const itensArmazem = useSelector(state => state.itensArmazem.filter)
-    const isLoading = useSelector(state => state.itensArmazem.loading)
     const dispatch = useDispatch()
+    const check = useSelector(state => state.itensArmazem.check)
 
-    const [armazem, setArmazem] = React.useState('')
-    const [searchText, setSearchText] = React.useState('')
+    const [armazem, setArmazem] = React.useState({})
 
     React.useEffect(() => {
         setArmazem(route.params.armazem)
-        dispatch(allItensArmazem(route.params.armazem.id))
     }, [])
 
-    const onChangeSearchText = text => {
-        setSearchText(text.toUpperCase())
-        dispatch(filterItensArmazem(text.toUpperCase()))
+    const goToManage = () => {
+        navigation.navigate('ItemArmazemManage', { armazem })
+    }
+
+    const goToCheck = () => {
+        navigation.navigate('ItemArmazemCheck', { armazem })
     }
 
     return (
         <Container>
             <Header title={armazem.nome} />
-            <Searchbar
-                placeholder="Buscar"
-                clearAccessibilityLabel='clear'
-                onChangeText={onChangeSearchText}
-                value={searchText}
-            />
-            <Content padder contentContainerStyle={
-                (isLoading || (!isLoading && itensArmazem.length === 0)) && styles.content
-            }>
-                {!isLoading && itensArmazem.length > 0 && itensArmazem.map(item => (
-                    <Card 
-                        item={item}
-                        key={item.id}
-                    />
-                ))}
-                {!isLoading && itensArmazem.length === 0 && searchText.length === 0 &&
-                    <Text style={styles.title}>Ainda não há itens cadastrados nesse armazém!</Text>
-                }
-                {!isLoading && itensArmazem.length === 0 && searchText.length > 0 &&
-                    <Text style={styles.title}>
-                        Item
-                        <Text style={styles.highlight}> {searchText} </Text>
-                        não encontrado nesse armazém!
-                    </Text>
-                }
-                {isLoading && <Spinner color={Colors.spinnerColor} />}
+            <Content padder contentContainerStyle={styles.content}>
+                <TouchableOpacity onPress={goToManage}>
+                    <Card style={styles.card}>
+                        <CardItem style={styles.cardItem}>
+                            <MaterialCommunityIcons name="treasure-chest" {...Colors.titleTextColor} size={128} />
+                            <Title style={styles.title}>
+                                GERENCIAR
+                            </Title>
+                        </CardItem>
+                    </Card>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={goToCheck}>
+                    <Card style={styles.card}>
+                        <CardItem style={styles.cardItem}>
+                            <MaterialCommunityIcons name="checkbox-marked-circle-outline" {...Colors.titleTextColor} size={128} />
+                            <Title style={styles.title}>
+                                CONFERIR
+                            </Title>
+                        </CardItem>
+                    </Card>
+                </TouchableOpacity>
             </Content>
         </Container>
     )
 }
 
 const styles = StyleSheet.create({
+    cardItem: {
+        marginVertical: 24,
+        marginHorizontal: 24,
+        backgroundColor: Colors.cardBackgroundColor,
+        flexDirection: 'column'
+    },
     title: {
-        color: Colors.cardBackgroundColor,
-        fontFamily: 'Roboto',
-        textAlign: 'center'
-    },
-    highlight: {
         fontFamily: 'Roboto_medium',
-        color: Colors.highlight
+        fontSize: 16,
+        backgroundColor: Colors.cardBackgroundColor,
+        ...Colors.titleTextColor
     },
-    content: {
+    contentView: {
         flex: 1,
-        justifyContent: 'center'
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    card: {
+        borderRadius: 10,
+        backgroundColor: Colors.cardBackgroundColor
     },
     content: {
         flex: 1,

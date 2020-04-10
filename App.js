@@ -37,15 +37,18 @@ export default class App extends Component {
       return <AppLoading />
     }
     return (
-      <SafeAreaView style={{ flex: 1, ...Colors.headerBackgroundColor }}>
-        <Provider>
-          <ReduxProvider store={store}>
-            <NavigationContainer>
-              <BottomTabNavigator />
-            </NavigationContainer >
-          </ReduxProvider>
-        </Provider>
-      </SafeAreaView>
+      <>
+        <SafeAreaView style={{ flex: 0, ...Colors.headerBackgroundColor }} />
+        <SafeAreaView style={{ flex: 1, ...Colors.headerBackgroundColor }} >
+          <Provider>
+            <ReduxProvider store={store}>
+              <NavigationContainer>
+                <BottomTabNavigator />
+              </NavigationContainer >
+            </ReduxProvider>
+          </Provider>
+        </SafeAreaView>
+      </>
     );
   }
 }

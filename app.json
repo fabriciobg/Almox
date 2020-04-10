@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Blank Template",
+    "name": "Almox",
     "slug": "almox",
     "privacy": "public",
     "sdkVersion": "36.0.0",
@@ -15,16 +15,15 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0a1e2b"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.FabricioGondim.Almox",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.FabricioGondim.Almox",
+      "versionCode": 1
     }
   }
 }

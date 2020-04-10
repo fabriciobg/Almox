@@ -20,7 +20,9 @@ export const dialogContentTextColor = '#0A1E2B'
 
 export const buttonConfirmColor = '#006600'
 
-export const buttonCancelColor = '#cc0000'
+export const buttonCancelColor = '#999966'
+
+export const buttonDeleteColor = '#cc0000'
 
 export const textInputColor = '#394B69'
 
